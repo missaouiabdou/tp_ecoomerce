@@ -1,0 +1,95 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Register{% endblock %}
+
+{% block stylesheets %}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+{% endblock %}
+
+{% block body %}
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="{{ path('browse_categories') }}">Our Store</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('browse_categories') }}">Home</a>
+                    </li>
+                    {% if app.user %}
+                        <li class="nav-item">
+                            <span class="nav-link">Welcome, {{ app.user.email }}</span>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('logout') }}">Logout</a>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('login') }}">Login</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container my-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card shadow">
+                    <div class="card-body p-5">
+                        <h2 class="card-title mb-4">Create an Account</h2>
+
+                        {% if app.flashes %}
+                            {% for label, messages in app.flashes %}
+                                <div class="alert alert-{{ label == 'error' ? 'danger' : 'success' }} alert-dismissible fade show" role="alert">
+                                    {% for message in messages %}
+                                        {{ message }}
+                                    {% endfor %}
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+
+                        {{ form_start(form) }}
+                            {{ form_row(form.email) }}
+                            {{ form_row(form.plainPassword.first) }}
+                            {{ form_row(form.plainPassword.second) }}
+
+                            {% if form_errors(form) %}
+                                <div class="alert alert-danger">
+                                    {{ form_errors(form) }}
+                                </div>
+                            {% endif %}
+
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-success btn-lg">Sign Up</button>
+                            </div>
+                        {{ form_end(form) }}
+
+                        <hr class="my-4">
+                        <p class="text-center text-muted">Already have an account? <a href="{{ path('login') }}" class="text-decoration-none">Log in</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-dark text-white mt-5 py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>Our Store</h5>
+                    <p>Quality products at affordable prices</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <p>&copy; 2026 Our Store. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+{% endblock %}

@@ -1,0 +1,94 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ category.name }} Products{% endblock %}
+
+{% block stylesheets %}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+{% endblock %}
+
+{% block body %}
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="{{ path('browse_categories') }}">Our Store</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('browse_categories') }}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">{{ category.name }}</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ path('browse_categories') }}" class="text-decoration-none">Home</a></li>
+                <li class="breadcrumb-item active" aria-current="page">{{ category.name }}</li>
+            </ol>
+        </nav>
+    </div>
+
+    <div class="container my-4">
+        <div class="p-5 mb-4 bg-primary bg-gradient text-white rounded-3">
+            <div class="container-fluid py-3">
+                <h1 class="display-4 fw-bold">{{ category.name }}</h1>
+                <p class="col-md-8 fs-5">{{ category.description }}</p>
+                <span class="badge bg-light text-dark fs-6">{{ products|length }} Products Available</span>
+            </div>
+        </div>
+
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            {% for product in products %}
+                <div class="col">
+                    <div class="card h-100">
+                        <img src="{{ product.image ?? 'https://via.placeholder.com/600x400?text=' ~ (product.name | url_encode) }}" class="card-img-top" alt="{{ product.name }}" style="height: 300px; object-fit: cover;">
+                        <div class="card-body">
+                            <span class="badge bg-primary mb-2">{{ category.name }}</span>
+                            <h5 class="card-title">{{ product.name }}</h5>
+                            <p class="card-text text-muted">{{ product.shortDescription }}</p>
+                            <p class="card-text fw-bold text-success">${{ product.formattedPrice }}</p>
+                            <a href="{{ path('product_details', {'slug': product.slug}) }}" class="btn btn-outline-primary">View Details</a>
+                        </div>
+                    </div>
+                </div>
+            {% else %}
+                <div class="col-12">
+                    <div class="alert alert-info">No products are available in this category yet.</div>
+                </div>
+            {% endfor %}
+        </div>
+
+        <nav aria-label="Product pagination" class="mt-5">
+            <ul class="pagination justify-content-center">
+                <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
+                <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item"><a class="page-link" href="#">Next</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <footer class="bg-dark text-white mt-5 py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>Our Store</h5>
+                    <p>Quality products at affordable prices</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <p>&copy; 2026 Our Store. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+{% endblock %}

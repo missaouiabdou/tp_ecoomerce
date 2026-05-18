@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}My Profile{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-8">
+            <h1>My Profile</h1>
+            <hr>
+
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Account Information</h5>
+                    <p><strong>Email:</strong> {{ user.email }}</p>
+                    <p><strong>Roles:</strong>
+                        {% for role in user.roles %}
+                            <span class="badge bg-primary">{{ role }}</span>
+                        {% endfor %}
+                    </p>
+                </div>
+            </div>
+
+            <div class="mt-4">
+                <a href="{{ path('browse_categories') }}" class="btn btn-secondary">Back to Shopping</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

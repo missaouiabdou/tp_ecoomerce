@@ -1,0 +1,91 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ product.name }}{% endblock %}
+
+{% block stylesheets %}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+{% endblock %}
+
+{% block body %}
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="{{ path('browse_categories') }}">Our Store</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('browse_categories') }}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('products_by_category', {'slug': category.slug}) }}">{{ category.name }}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">{{ product.name }}</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container my-5">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ path('browse_categories') }}" class="text-decoration-none">Home</a></li>
+                <li class="breadcrumb-item"><a href="{{ path('products_by_category', {'slug': category.slug}) }}" class="text-decoration-none">{{ category.name }}</a></li>
+                <li class="breadcrumb-item active" aria-current="page">{{ product.name }}</li>
+            </ol>
+        </nav>
+
+        <div class="row g-4">
+            <div class="col-lg-6">
+                <div class="card border-0 shadow-sm">
+                    <img src="{{ product.image ?? 'https://via.placeholder.com/800x600?text=' ~ (product.name | url_encode) }}" class="card-img-top" alt="{{ product.name }}" style="height: 500px; object-fit: cover;">
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h1 class="card-title">{{ product.name }}</h1>
+                        <p class="text-muted mb-2">Category: <a href="{{ path('products_by_category', {'slug': category.slug}) }}" class="text-decoration-none">{{ category.name }}</a></p>
+                        <p class="fs-4 fw-bold text-success mb-3">${{ product.formattedPrice }}</p>
+                        <p class="card-text">{{ product.description }}</p>
+                        <ul class="list-group list-group-flush my-4">
+                            <li class="list-group-item">{{ product.shortDescription }}</li>
+                            <li class="list-group-item">Fast delivery and secure checkout</li>
+                            <li class="list-group-item">Free returns within 30 days</li>
+                        </ul>
+                        <form action="{{ path('cart_add') }}" method="post" class="row gy-3 gx-2 align-items-end">
+                            <div class="col-auto">
+                                <label for="quantity" class="form-label">Quantité</label>
+                                <input id="quantity" type="number" name="quantity" value="1" min="1" class="form-control" />
+                            </div>
+                            <input type="hidden" name="productSlug" value="{{ product.slug }}" />
+                            <div class="col-auto">
+                                <button type="submit" class="btn btn-primary">Ajouter au panier</button>
+                            </div>
+                        </form>
+                        <a href="{{ path('products_by_category', {'slug': category.slug}) }}" class="btn btn-outline-secondary ms-2">Retour à {{ category.name }}</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-dark text-white mt-5 py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>Our Store</h5>
+                    <p>Quality products at affordable prices</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <p>&copy; 2026 Our Store. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+{% endblock %}
