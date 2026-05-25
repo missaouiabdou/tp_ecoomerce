@@ -7,10 +7,8 @@ use App\Entity\Product;
 
 class CatalogService
 {
-    /** @var Category[] */
     private array $categories = [];
 
-    /** @var Product[] */
     private array $products = [];
 
     public function __construct()
@@ -18,7 +16,6 @@ class CatalogService
         $this->loadSampleData();
     }
 
-    /** @return Category[] */
     public function getCategories(): array
     {
         return array_values($this->categories);
@@ -130,7 +127,6 @@ class CatalogService
             ),
         ];
 
-        // Set images for each product
         $products[0]->setCategory($electronics)->setImage('https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=800&h=600&fit=crop');
         $products[1]->setCategory($electronics)->setImage('https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=800&h=600&fit=crop');
         $products[2]->setCategory($electronics)->setImage('https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=800&h=600&fit=crop');
