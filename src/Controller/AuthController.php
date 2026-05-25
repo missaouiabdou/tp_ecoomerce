@@ -21,6 +21,7 @@ class AuthController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
             $plainPassword = $form->get('plainPassword')->getData();
 
             if ($userRegistrationService->userExists($user->getEmail())) {
@@ -28,6 +29,7 @@ class AuthController extends AbstractController
 
                 return $this->redirectToRoute('register');
             }
+
 
             $userRegistrationService->registerUser($user, $plainPassword);
 
@@ -48,7 +50,7 @@ class AuthController extends AbstractController
             return $this->redirectToRoute('browse_categories');
         }
 
-        $error = $authenticationUtils->getLastAuthenticationError();
+
         $lastUsername = $authenticationUtils->getLastUsername();
 
         return $this->render('auth/login.html.twig', [
@@ -60,5 +62,6 @@ class AuthController extends AbstractController
     #[Route('/logout', name: 'logout')]
     public function logout(): void
     {
+
     }
 }

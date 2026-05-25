@@ -7,7 +7,6 @@ use App\Entity\Product;
 
 class CatalogService
 {
-    private array $categories = [];
 
     private array $products = [];
 
@@ -15,6 +14,7 @@ class CatalogService
     {
         $this->loadSampleData();
     }
+
 
     public function getCategories(): array
     {
@@ -126,6 +126,7 @@ class CatalogService
                 'Minimalist desk lamp with adjustable brightness and a compact footprint.'
             ),
         ];
+
 
         $products[0]->setCategory($electronics)->setImage('https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=800&h=600&fit=crop');
         $products[1]->setCategory($electronics)->setImage('https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=800&h=600&fit=crop');

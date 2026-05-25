@@ -18,8 +18,6 @@ class UserRegistrationService
 
     public function registerUser(User $user, string $plainPassword): User
     {
-        $hashedPassword = $this->passwordHasher->hashPassword($user, $plainPassword);
-        $user->setPassword($hashedPassword);
 
         $this->entityManager->persist($user);
         $this->entityManager->flush();
