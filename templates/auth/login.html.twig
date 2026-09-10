@@ -24,7 +24,10 @@
                         <form method="post">
                             <div class="mb-3">
                                 <label for="inputEmail" class="form-label">Email address</label>
-                                <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
+                                {# VULNERABILITY — reflected XSS: last_username comes straight
+                               from the submitted email and is rendered with |raw, bypassing
+                               Twig's auto-escaping. Payload: "><script>alert(1)</script> #}
+                            <input type="email" value="{{ last_username|raw }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
                             </div>
                             <div class="mb-3">
                                 <label for="inputPassword" class="form-label">Password</label>

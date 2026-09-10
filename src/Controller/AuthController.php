@@ -76,14 +76,18 @@ class AuthController extends AbstractController
 
             $row = $connection->fetchAssociative($sql);
 
-            if (false !== $row && null !== $user = $userRepository->find($row['id'])) {
-                // Log the user in manually — no credential verification
-                // actually happened above.
-                $token = new UsernamePasswordToken($user, 'main', $user->getRoles());
-                $tokenStorage->setToken($token);
-                $request->getSession()->set('_security_main', serialize($token));
+            if (false !== $row) {
+                $user = $userRepository->find($row['id']);
 
-                return $this->redirectToRoute('browse_categories');
+                if (null !== $user) {
+                    // Log the user in manually — no credential verification
+                    // actually happened above.
+                    $token = new UsernamePasswordToken($user, 'main', $user->getRoles());
+                    $tokenStorage->setToken($token);
+                    $request->getSession()->set('_security_main', serialize($token));
+
+                    return $this->redirectToRoute('browse_categories');
+                }
             }
 
             $request->getSession()->set(
