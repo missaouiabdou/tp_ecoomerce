@@ -16,15 +16,9 @@ security:
         main:
             lazy: true
             provider: app_user_provider
-            form_login:
-                login_path: login
-                check_path: login
-                default_target_path: browse_categories
-                username_parameter: email
-                password_parameter: password
-                enable_csrf: true
-                csrf_token_id: authenticate
-                csrf_parameter: _csrf_token
+            access_denied_url: /login
+            # form_login removed: AuthController handles POST /login itself
+            # with a raw (injectable) SQL query.
             logout:
                 path: logout
 
